@@ -1,0 +1,30 @@
+{
+  "proxy": {
+    "port": 3128,
+    "pwd": "pwd",
+    "host": "proxy.com",
+    "user": "user"
+  },
+  "tasks": [{
+  	"name": "DB1 every minute",
+    "schedule": "* * * * *",
+  	"type": "mySQL",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "base": "DB1",
+    "user": "root",
+    "pwd": "pwd",
+    "destination": "dropbox:token/db1-{d=yyyy.MM.dd G 'at' HH:mm}"
+  }
+  ,{
+  	"name": "DB2 daily",
+    "schedule": "@daily",
+  	"type": "mySQL",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "base": "DB2",
+    "user": "root",
+    "pwd": "pwd",
+    "destination": "file:DB2-daily"
+  }]
+}

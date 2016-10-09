@@ -2,7 +2,7 @@ package com.fathzer.jdbbackup;
 
 public class ProxyParameters {
 	private String host;
-	private int port;
+	private int port = 3128;
 	private String user;
 	private String pwd;
 	

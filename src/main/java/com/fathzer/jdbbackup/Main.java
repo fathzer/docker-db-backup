@@ -34,20 +34,41 @@ public class Main {
 		if (file!=null) {
 			ObjectMapper mapper = new ObjectMapper();
 			LOGGER.log(Level.INFO,"Loading tasks file");
-			Parameters params = mapper.readValue(file, Parameters.class);
+			final Parameters params = mapper.readValue(file, Parameters.class);
 			for (final TaskParameters task : params.getTasks()) {
 				Scheduler scheduler = new Scheduler();
 				scheduler.schedule(toCron4JSchedule(task.getSchedule()), new Runnable() {
 					@Override
 					public void run() {
-						LOGGER.log(Level.INFO,task.getDest());
+						try {
+							String message = new JDbBackup().backup(toOptions(params.getProxy(), task));
+							LOGGER.log(Level.INFO, task.getName()+": "+message);
+						} catch (Throwable e) {
+							LOGGER.log(Level.SEVERE, task.getName()+" failed", e);
+						}
 					}
-					
 				});
 				scheduler.start();
-				LOGGER.log(Level.INFO,task.getDest()+" is scheduled");
+				LOGGER.log(Level.INFO,task.getName()+" is scheduled");
 			}
 		}
+	}
+
+	protected Options toOptions(ProxyParameters proxy, TaskParameters task) {
+		Options options = new Options();
+		if (proxy!=null) {
+			options.setProxyHost(proxy.getHost());
+			options.setProxyPort(proxy.getPort());
+			options.setProxyUser(proxy.getUser());
+			options.setProxyPwd(proxy.getPwd());
+		}
+		options.setDbHost(task.getHost());
+		options.setDbPort(task.getPort());
+		options.setDbName(task.getBase());
+		options.setDbUser(task.getUser());
+		options.setDbPwd(task.getPwd());
+		options.setDestination(task.getDestination());
+		return options;
 	}
 
 	public File getTasksFile(String[] args) {
