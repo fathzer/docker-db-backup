@@ -6,9 +6,9 @@
     "user": "user"
   },
   "tasks": [{
-  	"name": "DB1 every minute",
+    "name": "DB1 every minute",
     "schedule": "* * * * *",
-  	"type": "mySQL",
+    "type": "mySQL",
     "host": "127.0.0.1",
     "port": 3306,
     "base": "DB1",
@@ -17,9 +17,9 @@
     "destination": "dropbox:token/db1-{d=yyyy.MM.dd G 'at' HH:mm}"
   }
   ,{
-  	"name": "DB2 daily",
+    "name": "DB2 daily",
     "schedule": "@daily",
-  	"type": "mySQL",
+    "type": "mySQL",
     "host": "127.0.0.1",
     "port": 3306,
     "base": "DB2",
