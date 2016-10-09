@@ -1,4 +1,4 @@
-package com.fathzer.jdbbackup;
+package com.fathzer.jdbbackup.cron;
 
 import java.util.ResourceBundle;
 

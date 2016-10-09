@@ -20,8 +20,6 @@
 			<artifactId>jdbbackup</artifactId>
 			<version>0.0.2</version>
 		</dependency>
-		<!-- dependency> <groupId>org.json</groupId> <artifactId>json</artifactId> 
-			<version>20160810</version> </dependency -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -86,7 +84,7 @@
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
-										<Main-Class>com.fathzer.jdbbackup.Main</Main-Class>
+										<Main-Class>com.fathzer.jdbbackup.cron.Main</Main-Class>
 										<Permissions>all-permissions</Permissions>
 										<Application-Name>JDbBackup</Application-Name>
 										<Trusted-Only>true</Trusted-Only>

@@ -1,4 +1,4 @@
-package com.fathzer.jdbbackup;
+package com.fathzer.jdbbackup.cron;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fathzer.jdbbackup.JDbBackup;
+import com.fathzer.jdbbackup.Options;
+import com.fathzer.jdbbackup.cron.parameters.Backup;
+import com.fathzer.jdbbackup.cron.parameters.DataBase;
+import com.fathzer.jdbbackup.cron.parameters.Parameters;
+import com.fathzer.jdbbackup.cron.parameters.Proxy;
+import com.fathzer.jdbbackup.cron.parameters.Task;
 
 import it.sauronsoftware.cron4j.Scheduler;
 
@@ -35,26 +42,29 @@ public class Main {
 			ObjectMapper mapper = new ObjectMapper();
 			LOGGER.log(Level.INFO,"Loading tasks file");
 			final Parameters params = mapper.readValue(file, Parameters.class);
-			for (final TaskParameters task : params.getTasks()) {
-				Scheduler scheduler = new Scheduler();
-				scheduler.schedule(toCron4JSchedule(task.getSchedule()), new Runnable() {
-					@Override
-					public void run() {
-						try {
-							String message = new JDbBackup().backup(toOptions(params.getProxy(), task));
-							LOGGER.log(Level.INFO, task.getName()+": "+message);
-						} catch (Throwable e) {
-							LOGGER.log(Level.SEVERE, task.getName()+" failed", e);
+			for (final Task task : params.getTasks()) {
+				final DataBase db = task.getDatabase();
+				for (final Backup backup : task.getBackups()) {
+					Scheduler scheduler = new Scheduler();
+					scheduler.schedule(toCron4JSchedule(backup.getSchedule()), new Runnable() {
+						@Override
+						public void run() {
+							try {
+								String message = new JDbBackup().backup(toOptions(params.getProxy(), db, backup.getDestination()));
+								LOGGER.log(Level.INFO, backup.getName()+": "+message);
+							} catch (Throwable e) {
+								LOGGER.log(Level.SEVERE, backup.getName()+" failed", e);
+							}
 						}
-					}
-				});
-				scheduler.start();
-				LOGGER.log(Level.INFO,task.getName()+" is scheduled");
+					});
+					scheduler.start();
+					LOGGER.log(Level.INFO,backup.getName()+" is scheduled");
+				}
 			}
 		}
 	}
 
-	protected Options toOptions(ProxyParameters proxy, TaskParameters task) {
+	protected Options toOptions(Proxy proxy, DataBase db, String destination) {
 		Options options = new Options();
 		if (proxy!=null) {
 			options.setProxyHost(proxy.getHost());
@@ -62,12 +72,12 @@ public class Main {
 			options.setProxyUser(proxy.getUser());
 			options.setProxyPwd(proxy.getPwd());
 		}
-		options.setDbHost(task.getHost());
-		options.setDbPort(task.getPort());
-		options.setDbName(task.getBase());
-		options.setDbUser(task.getUser());
-		options.setDbPwd(task.getPwd());
-		options.setDestination(task.getDestination());
+		options.setDbHost(db.getHost());
+		options.setDbPort(db.getPort());
+		options.setDbName(db.getBase());
+		options.setDbUser(db.getUser());
+		options.setDbPwd(db.getPwd());
+		options.setDestination(destination);
 		return options;
 	}
 

@@ -1,6 +1,6 @@
-package com.fathzer.jdbbackup;
+package com.fathzer.jdbbackup.cron.parameters;
 
-public class ProxyParameters {
+public class Proxy {
 	private String host;
 	private int port = 3128;
 	private String user;

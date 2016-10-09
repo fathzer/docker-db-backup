@@ -1,25 +1,13 @@
-package com.fathzer.jdbbackup;
+package com.fathzer.jdbbackup.cron.parameters;
 
-public class TaskParameters {
-	private String name;
-	private String schedule;
+public class DataBase {
 	private String type="mySQL";
 	private String base;
 	private String user="root";
 	private String pwd;
 	private String host;
 	private int port=3306;
-	private String destination;
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getSchedule() {
-		return schedule;
-	}
 	public String getType() {
 		return type;
 	}
@@ -41,12 +29,6 @@ public class TaskParameters {
 	public int getPort() {
 		return port;
 	}
-	public String getDestination() {
-		return destination;
-	}
-	public void setSchedule(String schedule) {
-		this.schedule = schedule;
-	}
 	public void setBase(String base) {
 		this.base = base;
 	}
@@ -62,8 +44,4 @@ public class TaskParameters {
 	public void setPort(int port) {
 		this.port = port;
 	}
-	public void setDestination(String dest) {
-		this.destination = dest;
-	}
-	
 }

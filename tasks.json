@@ -6,25 +6,38 @@
     "user": "user"
   },
   "tasks": [{
-    "name": "DB1 every minute",
-    "schedule": "* * * * *",
-    "type": "mySQL",
-    "host": "127.0.0.1",
-    "port": 3306,
-    "base": "DB1",
-    "user": "root",
-    "pwd": "pwd",
-    "destination": "dropbox:token/db1-{d=yyyy.MM.dd G 'at' HH:mm}"
+  	"database": {
+      "type": "mySQL",
+      "host": "127.0.0.1",
+      "port": 3306,
+      "base": "DB1",
+      "user": "root",
+      "pwd": "pwd"
+    },
+    "backups": [{
+      "name": "DB1 every minute",
+      "schedule": "* * * * *",
+      "destination": "dropbox:token/db1-{d=yyyy.MM.dd G 'at' HH:mm}"
+    },{
+      "name": "DB1 daily",
+      "schedule": "@daily",
+      "destination": "dropbox:token/db1-{d=yyyy.MM.dd}"
+    }
+    ]
   }
   ,{
-    "name": "DB2 daily",
-    "schedule": "@daily",
-    "type": "mySQL",
-    "host": "127.0.0.1",
-    "port": 3306,
-    "base": "DB2",
-    "user": "root",
-    "pwd": "pwd",
-    "destination": "file:DB2-daily"
+    "database": {
+      "type": "mySQL",
+      "host": "127.0.0.1",
+      "port": 3306,
+      "base": "DB2",
+      "user": "root",
+      "pwd": "pwd"
+     },
+     "backups": [{
+       "name": "DB2 daily",
+       "schedule": "@daily",
+       "destination": "file:DB2-daily"
+     }]
   }]
 }
