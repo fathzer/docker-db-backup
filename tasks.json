@@ -17,11 +17,11 @@
     "backups": [{
       "name": "DB1 every minute",
       "schedule": "* * * * *",
-      "destination": "dropbox:token/db1-{d=yyyy.MM.dd G 'at' HH:mm}"
+      "destination": "sftp://user:pwd@host:port/path/fileName"
     },{
       "name": "DB1 daily",
       "schedule": "@daily",
-      "destination": "dropbox:token/db1-{d=yyyy.MM.dd}"
+      "destination": "dropbox://token/db1-{d=yyyy.MM.dd}"
     }
     ]
   }
