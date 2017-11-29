@@ -9,7 +9,7 @@ Work in progress ...
 
 You should get a Dropbox token using the following commands:
 ```
-docker run -ti --entrypoint="/bin/bash" fathzer/docker-db-backup
+docker run -ti --entrypoint="/bin/bash" fathzer/db-backup
 java -cp ./jdbbackup.jar com.fathzer.jdbbackup.dropbox.DropBoxManager
 ```
 This commands will display the following message:
