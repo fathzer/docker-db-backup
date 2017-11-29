@@ -7,10 +7,9 @@ Work in progress ...
 ## Saving backups to Dropbox
 --
 
-You should get a Dropbox token using the following commands:
+You should get a Dropbox token using the following command:
 ```
-docker run -ti --entrypoint="/bin/bash" fathzer/db-backup
-java -cp ./jdbbackup.jar com.fathzer.jdbbackup.dropbox.DropBoxManager
+docker run -ti --entrypoint="java" fathzer/db-backup -cp ./jdbbackup.jar com.fathzer.jdbbackup.dropbox.DropBoxManager
 ```
 This commands will display the following message:
 >1. Go to: https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=xxx
@@ -23,5 +22,5 @@ Then type in the authorization code you've just got on Dropbox site and press re
 >Your token is: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 >Keep it in a secure place as it allows to access to your backup folder on Dropbox
 
-Copy the token when type exit to close the executing container.
+Copy the token, you'll have to reuse it in jdbbackup configuration file.
 
