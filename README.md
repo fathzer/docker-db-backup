@@ -1,8 +1,11 @@
 # docker-db-backup
+
+
+**This project has moved to [jdbbackup/jdbbackup-docker](https://github.com/jdbbackup/jdbbackup-docker)**
+
+
 ---
 A simple way to backup your mySQL database using Docker
-
-Work in progress ...
 
 ## Saving backups to Dropbox
 --
